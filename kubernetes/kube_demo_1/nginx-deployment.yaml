@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: nginx-deployment
+  name: nginx-deployment
+spec:
+  replicas: 12
+  selector:
+    matchLabels:
+      app: nginx-deployment
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: nginx-deployment
+    spec:
+      containers:
+        - image: nginx
+          name: nginx
+          # simulate containers failing on update
+          # command: ["/bin/bash", "-c"] # override the default command
+          # args: ["sleep 5; exit 1"] # sleep 5ms, exit with an error
+          resources: {}
+status: {}
